@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skill Exchange Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar" style="display: none;">
+      <div class="logo">SkillX</div>
+      <div class="nav-links">
+        <a href="#" data-view="dashboard">Dashboard</a>
+        <a href="#" data-view="profile">Profile</a>
+        <a href="#" data-view="messages">Messages</a>
+        <button id="logoutBtn" class="btn-secondary">Logout</button>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="container">
+      
+      <!-- Auth View -->
+      <section id="authView" class="view active">
+        <div class="auth-container">
+          <div class="auth-card">
+            <h2 id="authTitle">Welcome to SkillX</h2>
+            <p id="authSubtitle">Log in to continue</p>
+            <div id="authError" class="error-msg"></div>
+            
+            <form id="authForm">
+              <div class="input-group signup-only" style="display: none;">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="John Doe">
+              </div>
+              <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required placeholder="john@example.com">
+              </div>
+              <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required placeholder="********">
+              </div>
+              <div class="input-group signup-only" style="display: none;">
+                <label for="skillsOffered">Skills you can offer (comma separated)</label>
+                <input type="text" id="skillsOffered" placeholder="e.g. Graphic Design, Python">
+              </div>
+              <div class="input-group signup-only" style="display: none;">
+                <label for="skillsWanted">Skills you want to learn (comma separated)</label>
+                <input type="text" id="skillsWanted" placeholder="e.g. React, Spanish">
+              </div>
+              <button type="submit" class="btn-primary w-100" id="authSubmitBtn">Login</button>
+            </form>
+            
+            <div class="auth-toggle">
+              <span id="authToggleText">Don't have an account?</span>
+              <a href="#" id="authToggleLink">Sign up</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dashboard View -->
+      <section id="dashboardView" class="view">
+        <div class="header-section">
+          <h2>Discover Skills</h2>
+          <button id="addSkillBtn" class="btn-primary">+ Add Skill</button>
+        </div>
+        
+        <div class="skills-grid" id="skillsGrid">
+          <!-- Skills populated by JS -->
+        </div>
+      </section>
+
+      <!-- Profile View -->
+      <section id="profileView" class="view">
+        <div class="profile-card">
+          <div class="profile-header">
+            <div class="profile-avatar" id="profileAvatar"></div>
+            <div class="profile-info">
+              <h2 id="profileName">Loading...</h2>
+              <p id="profileEmail">Loading...</p>
+            </div>
+          </div>
+          <div class="profile-body">
+
+            
+            <div class="skills-section">
+              <div class="skills-column">
+                <h3>Skills Offered</h3>
+                <ul id="skillsOfferedList" class="skill-list"></ul>
+              </div>
+              <div class="skills-column">
+                <h3>Skills Wanted</h3>
+                <ul id="skillsWantedList" class="skill-list"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Messages View -->
+      <section id="messagesView" class="view">
+        <div class="messaging-container">
+          <div class="users-list" id="chatUsersList">
+            <!-- Populated by JS -->
+          </div>
+          <div class="chat-area">
+            <div class="chat-header" id="chatHeader">
+              Select a user to start chatting
+            </div>
+            <div class="chat-messages" id="chatMessages">
+              <!-- Messages here -->
+            </div>
+            <div class="chat-input" id="chatInputArea" style="display: none;">
+              <input type="text" id="messageInput" placeholder="Type a message...">
+              <button id="sendMessageBtn" class="btn-primary">Send</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Add Skill Modal -->
+      <div id="skillModal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn" id="closeSkillModal">&times;</span>
+          <h2>Add a Skill</h2>
+          <form id="skillForm">
+            <div class="input-group">
+              <label for="skillName">Skill Name</label>
+              <input type="text" id="skillName" required placeholder="e.g. Graphic Design">
+            </div>
+            <div class="input-group">
+              <label for="skillType">Type</label>
+              <select id="skillType" required>
+                <option value="offer">I can teach this</option>
+                <option value="want">I want to learn this</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-primary">Save Skill</button>
+          </form>
+        </div>
+      </div>
+
+
+
+    </main>
+  </div>
+  <script src="./js/api.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
