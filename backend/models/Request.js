@@ -5,6 +5,8 @@ const requestSchema = new mongoose.Schema({
   receiver_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   skill_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Skill', required: true },
   status: { type: String, enum: ['pending', 'accepted', 'rejected'], default: 'pending' },
+  completed: { type: Boolean, default: false },
+  completedAt: { type: Date },
   createdAt: { type: Date, default: Date.now }
 });
 

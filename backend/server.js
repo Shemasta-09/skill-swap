@@ -12,7 +12,8 @@ connectDB();
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '30mb' }));
+app.use(express.urlencoded({ extended: true, limit: '30mb' }));
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
@@ -20,12 +21,19 @@ app.use('/api/skills', require('./routes/skills'));
 app.use('/api/requests', require('./routes/requests'));
 app.use('/api/messages', require('./routes/messages'));
 
-// Serve static frontend assets
-const frontendPath = path.join(__dirname, '..', 'frontend');
+// Serve project root and frontend static assets
+const rootPath = path.join(__dirname, '..');
+const frontendPath = path.join(rootPath, 'frontend');
+const uploadsPath = path.join(__dirname, 'uploads');
+app.use(express.static(rootPath));
 app.use(express.static(frontendPath));
+app.use('/uploads', express.static(uploadsPath));
 
 // SPA fallback for frontend routes
-app.get(/(.*)/, (req, res) => {
+app.use((req, res) => {
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ message: 'API route not found' });
+  }
   res.sendFile(path.join(frontendPath, 'index.html'));
 });
 

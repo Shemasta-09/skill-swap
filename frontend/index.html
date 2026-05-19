@@ -69,7 +69,25 @@
           <h2>Discover Skills</h2>
           <button id="addSkillBtn" class="btn-primary">+ Add Skill</button>
         </div>
-        
+
+        <div class="dashboard-panels">
+          <div class="dashboard-panel" id="trackingPanel">
+            <h3>Request Tracker</h3>
+            <div class="tracker-grid">
+              <div class="tracker-card"><strong id="totalRequests">0</strong><span>Total Requests</span></div>
+              <div class="tracker-card"><strong id="pendingRequests">0</strong><span>Pending</span></div>
+              <div class="tracker-card"><strong id="acceptedRequests">0</strong><span>Accepted</span></div>
+              <div class="tracker-card"><strong id="rejectedRequests">0</strong><span>Rejected</span></div>
+              <div class="tracker-card"><strong id="completedExchanges">0</strong><span>Completed Exchanges</span></div>
+            </div>
+            <div id="popularSkills" class="popular-skills"></div>
+          </div>
+          <div class="dashboard-panel" id="requestPanel">
+            <h3>Request Management</h3>
+            <div id="requestList" class="request-list"></div>
+          </div>
+        </div>
+
         <div class="skills-grid" id="skillsGrid">
           <!-- Skills populated by JS -->
         </div>
@@ -111,6 +129,15 @@
           <div class="chat-area">
             <div class="chat-header" id="chatHeader">
               Select a user to start chatting
+            </div>
+            <div class="chat-actions">
+              <button id="audioCallBtn" class="btn-secondary">Start Audio Call</button>
+              <button id="videoCallBtn" class="btn-secondary">Start Video Call</button>
+            </div>
+            <div id="callPanel" class="call-panel" style="display:none;">
+              <video id="localVideo" autoplay muted playsinline></video>
+              <div id="callStatus">Call active...</div>
+              <button id="endCallBtn" class="btn-secondary">End Call</button>
             </div>
             <div class="chat-messages" id="chatMessages">
               <!-- Messages here -->

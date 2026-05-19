@@ -13,15 +13,29 @@ const api = {
 
   async request(endpoint, options = {}) {
     try {
+      const token = this.getToken();
+      const bodyIsForm = options.body instanceof FormData;
+      const headers = {
+        ...(bodyIsForm ? {} : { 'Content-Type': 'application/json' }),
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...options.headers
+      };
+
       const response = await fetch(`${API_URL}${endpoint}`, {
         ...options,
-        headers: { ...this.headers(), ...options.headers }
+        headers
       });
-      
-      const data = await response.json().catch(() => ({}));
-      
+
+      const responseText = await response.text();
+      let data;
+      try {
+        data = JSON.parse(responseText);
+      } catch (_) {
+        data = { message: responseText };
+      }
+
       if (!response.ok) {
-        throw new Error(data.message || 'Something went wrong');
+        throw new Error(data.message || response.statusText || 'Something went wrong');
       }
       return data;
     } catch (error) {
@@ -61,7 +75,11 @@ const api = {
     update: (id, status) => api.request(`/requests/${id}`, {
       method: 'PUT',
       body: JSON.stringify({ status })
-    })
+    }),
+    complete: (id) => api.request(`/requests/${id}/complete`, {
+      method: 'PUT'
+    }),
+    stats: () => api.request('/requests/stats')
   },
 
   messages: {
@@ -69,6 +87,10 @@ const api = {
     send: (data) => api.request('/messages', {
       method: 'POST',
       body: JSON.stringify(data)
+    }),
+    sendWithAttachments: (formData) => api.request('/messages/upload', {
+      method: 'POST',
+      body: formData
     })
   }
 };
